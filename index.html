@@ -44,33 +44,23 @@
                 </a>
             </div>
         </div>
-        <div class="navbar-menu-wrapper d-flex align-items-top">
+        <div class="navbar-menu-wrapper d-flex align-items-top  justify-content-between">
             <ul class="navbar-nav">
                 <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
                     <h1 class="welcome-text">Good Morning,</h1>
                     <h3 class="welcome-sub-text">You are Welcome</h3>
                 </li>
             </ul>
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item dropdown d-none d-lg-block">
-                    <button class="nav-link dropdown-bordered dropdown-toggle dropdown-toggle-split" id="messageDropdown" aria-expanded="false" aria-haspopup="true" aria-controls="messageDropdown">
-                        Select Category
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
-                        <a class="dropdown-item py-3" href="#">
-                            <p class="mb-0 font-weight-medium float-left">Select category</p>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item preview-item" href="#">
-                            <div class="preview-item-content flex-grow py-2">
-                                <p class="preview-subject ellipsis font-weight-medium text-dark">Bootstrap Bundle </p>
-                                <p class="fw-light small-text mb-0">This is a Bundle featuring 16 unique dashboards</p>
-                            </div>
-                        </a>
-                        <!-- Other dropdown items -->
-                    </div>
-                </li>
-            </ul>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <li><button class="dropdown-item" type="button">Action</button></li>
+                <li><button class="dropdown-item" type="button">Another action</button></li>
+                <li><button class="dropdown-item" type="button">Something else here</button></li>
+              </ul>
+            </div>
         </div>
     </nav>
 
