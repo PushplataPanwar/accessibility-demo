@@ -83,7 +83,7 @@ a {
   left: 0;
   bottom: 0;
   width: 250px;
-  height: 100%;
+  height: 100vh;
   overflow-y: auto;
   background: var(--light);
   transition: 0.5s;
@@ -138,7 +138,6 @@ a {
   font-weight: 500;
   border-left: 3px solid var(--light);
   border-radius: 0 30px 30px 0;
-  outline: none;
 }
 
 .sidebar .navbar .navbar-nav .nav-link:hover,
@@ -302,7 +301,3 @@ a {
   color: #d14624;
 }
 
-.fixed-nav{
-  position: fixed;
-  width: 250px;
-}

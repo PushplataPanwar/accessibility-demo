@@ -1,11 +1,12 @@
 var root = document.documentElement;
+var previousLinkHref = null;
+var nextLinkHref = null;
 // Function to update CSS variables
 function updateCSSVariables(primary, light, dark) {
-    root.style.setProperty('--primary', primary);
-    root.style.setProperty('--light', light);
-    root.style.setProperty('--dark', dark);
+    root.style.setProperty("--primary", primary);
+    root.style.setProperty("--light", light);
+    root.style.setProperty("--dark", dark);
 }
-
 
 (function ($) {
     "use strict";
@@ -13,150 +14,220 @@ function updateCSSVariables(primary, light, dark) {
     // Spinner
     var spinner = function () {
         setTimeout(function () {
-            if ($('#spinner').length > 0) {
-                $('#spinner').removeClass('show');
+            if ($("#spinner").length > 0) {
+                $("#spinner").removeClass("show");
             }
-        }, 15); // 2000 milliseconds = 2 seconds
+        }, 1000); // 2000 milliseconds = 2 seconds
     };
     spinner();
-
 
     // Back to top button
     $(window).scroll(function () {
         if ($(this).scrollTop() > 300) {
-            $('.back-to-top').fadeIn('slow');
+            $(".back-to-top").fadeIn("slow");
         } else {
-            $('.back-to-top').fadeOut('slow');
+            $(".back-to-top").fadeOut("slow");
         }
     });
-    $('.back-to-top').click(function () {
-        $('html, body').animate({ scrollTop: 0 }, 1500, 'easeInOutExpo');
+    $(".back-to-top").click(function () {
+        $("html, body").animate({
+            scrollTop: 0
+        }, 1500, "easeInOutExpo");
         return false;
     });
 
-
-// Example data for sidebar links
-const sidebarLinks = [
-    { 
-        href: "index.html", 
-        text: "Basic Accessibility", 
-        iconClass: "fa fa-tachometer-alt", 
-        ariaLabel: "Navigate to Basic Accessibility" 
+    // Example data for sidebar links
+    const sidebarLinks = [{
+        href: "index.html",
+        text: "Basic Accessibility",
+        iconClass: "fa fa-tachometer-alt",
     },
-    { 
-        href: "#", 
-        text: "Introduction", 
-        iconClass: "fa fa-laptop", 
-        dropdown: [
-            { 
-                iconClass: "fa fa-laptop", 
-                href: "button.html", 
-                text: "Buttons",
-                ariaLabel: "Navigate to Buttons" 
-            },
-            { 
-                iconClass: "fa fa-laptop", 
-                href: "button.html", 
-                text: "Buttons",
-                ariaLabel: "Navigate to Buttons" 
-            }
-        ]
+    {
+        href: "#",
+        text: "Indroduction",
+        iconClass: "fa fa-laptop",
+        dropdown: [{
+            iconClass: "fa fa-laptop",
+            href: "button.html",
+            text: "Buttons"
+        },
+        {
+            iconClass: "fa fa-laptop",
+            href: "button.html",
+            text: "Buttons"
+        },
+        ],
     },
-    { 
-        href: "index.html", 
-        text: "1 Accessibility", 
-        iconClass: "fa fa-tachometer-alt", 
-        ariaLabel: "Navigate to 1 Accessibility" 
-    }
-];
+    {
+        href: "index.html",
+        text: "1 Accessibility",
+        iconClass: "fa fa-tachometer-alt",
+    },
+    ];
 
-
-// Function to generate sidebar HTML
-function generateSidebarHTML(sidebarLinks) {
-    return `
-        <nav class="navbar bg-light navbar-light fixed-nav">
-            <a href="index.html" class="navbar-brand mx-4 mb-3">
+    // Function to generate sidebar HTML
+    function generateSidebarHTML(sidebarLinks, currentPath) {
+        return `
+        <nav class="navbar bg-light navbar-light">
+            <a href="index.html" class="navbar-brand mx-4 mb-3" tabindex="1">
                 <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>Accessibility </h3>
             </a>
-            <div class="d-flex align-items-center ms-4 mb-4">
+            <div class="d-flex align-items-center ms-4 mb-4" tabindex="0">
                 <div class="ms-3">
-                    <h6 class="mb-0">Accessibility Guidelines</h6>
+                    <h6 class="mb-0" >Accessibility Guidelines</h6>
                 </div>
             </div>
             <div class="navbar-nav w-100">
-                ${generateLinksHTML(sidebarLinks)}
+                ${generateLinksHTML(sidebarLinks, currentPath)}
             </div>
         </nav>
     `;
-}
+    }
 
-function generateLinksHTML(links) {
-    return links.map(link => {
-        if (link.dropdown) {
-            return `
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <i class="${link.iconClass} me-2"></i>${link.text}
-                    </a>
-                    <div class="dropdown-menu bg-transparent border-0" aria-labelledby="navbarDropdown">
-                        ${generateDropdownLinksHTML(link.dropdown)}
+
+    function generateLinksHTML(links, currentPath) {
+        return links
+            .map((link, index, array) => {
+                if (link.dropdown) {
+                    const isActiveDropdown = link.dropdown.some(
+                        (subLink) => subLink.href === currentPath
+                    );
+                    const dropdownItemsHTML = link.dropdown
+                        .map((subLink) => {
+                            const isActive = subLink.href === currentPath;
+                            if (isActive) {
+                                previousLinkHref = index > 0 ? array[index - 1].href : null;
+                                nextLinkHref =
+                                    index < array.length - 1 ? array[index + 1].href : null;
+                            }
+                            return `<a href="${subLink.href}" class="dropdown-item ${isActive ? "active" : ""
+                                }" tabindex="0">${subLink.text}</a>`;
+                        })
+                        .join("");
+
+                    return `
+                <div class="nav-item dropdown ${isActiveDropdown ? "active" : ""
+                        }" tabindex="0">
+                    <a href="#" class="nav-link dropdown-toggle ${isActiveDropdown ? "active" : ""
+                        }" data-bs-toggle="dropdown" tabindex="0"><i class="${link.iconClass
+                        } me-2"></i>${link.text}</a>
+                    <div class="dropdown-menu bg-transparent border-0 ${isActiveDropdown ? "show" : ""
+                        }">
+                        ${dropdownItemsHTML}
                     </div>
                 </div>
             `;
-        } else {
-            return `
-                <a href="${link.href}" class="nav-item nav-link" role="button" aria-label="${link.text}">
+                } else {
+                    const isActive = link.href === currentPath;
+                    if (isActive && index > 0) {
+                        previousLinkHref = array[index - 1].href;
+                    }
+                    if (isActive && index < array.length - 1) {
+                        nextLinkHref = array[index + 1].href;
+                    }
+                    return `<a href="${link.href
+                        }" tabindex="0" class="nav-item nav-link ${isActive ? "active" : ""
+                        }"><i class="${link.iconClass} me-2"></i>${link.text}</a>`;
+                }
+            })
+            .join("");
+    }
+
+
+    function generateSidebarHTML(sidebarLinks, currentPath) {
+        return `
+        <nav class="navbar bg-light navbar-light">
+            <a href="index.html" class="navbar-brand mx-4 mb-3" tabindex="0" aria-label="Home">
+                <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>Accessibility </h3>
+            </a>
+            <div class="d-flex align-items-center ms-4 mb-4" tabindex="0">
+                <div class="ms-3">
+                    <h6 class="mb-0" tabindex="0">Accessibility Guidelines</h6>
+                </div>
+            </div>
+            <div class="navbar-nav w-100">
+                ${generateLinksHTML(sidebarLinks, currentPath)}
+            </div>
+        </nav>
+    `;
+    }
+
+    function handleDropdownKeydown(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            const dropdownToggle = event.currentTarget;
+            if (dropdownToggle.getAttribute("aria-expanded") === "true") {
+                dropdownToggle.setAttribute("aria-expanded", "false");
+                dropdownToggle.nextElementSibling.classList.remove("show");
+            } else {
+                dropdownToggle.setAttribute("aria-expanded", "true");
+                dropdownToggle.nextElementSibling.classList.add("show");
+            }
+        }
+    }
+
+    function generateLinksHTML(links, currentPath) {
+        return links
+            .map((link, index, array) => {
+                if (link.dropdown) {
+                    const isActiveDropdown = link.dropdown.some(
+                        (subLink) => subLink.href === currentPath
+                    );
+                    const dropdownItemsHTML = link.dropdown
+                        .map((subLink) => {
+                            const isActive = subLink.href === currentPath;
+                            return `<a href="${subLink.href}" class="dropdown-item">${subLink.text}</a>`;
+                        })
+                        .join("");
+
+                    return `
+               
+                
+ <div class="nav-item dropdown">
+ <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true"><i class="far fa-file-alt me-2"></i>Pages</a>
+ <div class="dropdown-menu bg-transparent border-0 " data-bs-popper="none">
+   ${dropdownItemsHTML}
+ </div>
+</div>
+            `;
+                } else {
+                    const isActive = link.href === currentPath;
+                    return `<a href="${link.href}" tabindex="0" class="nav-item nav-link ${isActive ? "active" : ""}">
                     <i class="${link.iconClass} me-2"></i>${link.text}
-                </a>
-            `;
-        }
-    }).join('');
-}
-
-function generateDropdownLinksHTML(links) {
-    return links.map(link => `
-        <a href="${link.href}" class="dropdown-item" role="menuitem" aria-label="${link.text}">
-            <i class="${link.iconClass} me-2"></i>${link.text}
-        </a>
-    `).join('');
-}
+                </a>`;
+                }
+            })
+            .join("");
+    }
 
 
-// Function to generate sidebar links HTML
-function generateLinksHTML(links) {
-    return links.map(link => {
-        if (link.dropdown) {
-            return `
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="${link.iconClass} me-2"></i>${link.text}</a>
-                    <div class="dropdown-menu bg-transparent border-0">
-                        ${generateLinksHTML(link.dropdown)}
-                    </div>
-                </div>
-            `;
-        } else {
-            return `<a href="${link.href}" class="nav-item nav-link"><i class="${link.iconClass} me-2"></i>${link.text}</a>`;
-        }
-    }).join('');
-}
 
-// Example usage:
-// const sidebarContainer = document.getElementById('sidebar-container');
-// sidebarContainer.innerHTML = generateSidebarHTML(sidebarLinks);
+    $(document).ready(function () {
+        let currentPath = window.location.pathname;
+        currentPath = currentPath.replace(/^\/|\/index.html$/g, "");
+        $(".sidebar_container").html(
+            generateSidebarHTML(sidebarLinks, currentPath)
+        );
+        $(".header_container").html(header);
+        console.log(nextLinkHref, previousLinkHref);
+    });
 
+    // Example usage:
+    // const sidebarContainer = document.getElementById('sidebar-container');
+    // sidebarContainer.innerHTML = generateSidebarHTML(sidebarLinks);
 
-    const header = `<nav class="navbar navbar-expand bg-light navbar-light fixed-top mb-4 px-4 py-0">
-<a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+    const header = `<nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+<a href="index.html" class="navbar-brand d-flex d-lg-none me-4"  tabindex="1">
     <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
 </a>
-<a href="#" class="sidebar-toggler flex-shrink-0">
+<a href="#" class="sidebar-toggler flex-shrink-0"  tabindex="1">
     <i class="fa fa-bars"></i>
 </a>
 <form class="d-none d-md-flex ms-4">
-    <input class="form-control border-0" type="search" placeholder="Search">
+    <input class="form-control border-0" type="search" placeholder="Search"  tabindex="1">
 </form>
 <div class="navbar-nav align-items-center ms-auto">
-    <div class="nav-item dropdown">
+    <div class="nav-item dropdown"  tabindex="1">
         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
             <i class="fa fa-envelope me-lg-2"></i>
             <span class="d-none d-lg-inline-flex">Message</span>
@@ -195,8 +266,8 @@ function generateLinksHTML(links) {
             <a href="#" class="dropdown-item text-center">See all message</a>
         </div>
     </div>
-    <div class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+    <div class="nav-item dropdown "  tabindex="1">
+        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" > 
             <i class="fa fa-bell me-lg-2"></i>
             <span class="d-none d-lg-inline-flex">Notificatin</span>
         </a>
@@ -228,41 +299,32 @@ function generateLinksHTML(links) {
         </div>
     </div>
 </div>
-</nav>`
-
-
-
-
-    $(document).ready(function () {
-        $('.sidebar_container').html(generateSidebarHTML(sidebarLinks));
-        $('.header_container').html(header);
-        header
-    });
-
+</nav>`;
 
     // Sidebar Toggler
     $(document).ready(function () {
-        $('.sidebar-toggler').click(function () {
-            $('.sidebar, .content').toggleClass("open");
+        $(".sidebar-toggler").click(function () {
+            $(".sidebar, .content").toggleClass("open");
             return false;
         });
     });
 
-
     // Progress Bar
-    $('.pg-bar').waypoint(function () {
-        $('.progress .progress-bar').each(function () {
-            $(this).css("width", $(this).attr("aria-valuenow") + '%');
-        });
-    }, { offset: '80%' });
-
+    $(".pg-bar").waypoint(
+        function () {
+            $(".progress .progress-bar").each(function () {
+                $(this).css("width", $(this).attr("aria-valuenow") + "%");
+            });
+        }, {
+        offset: "80%"
+    }
+    );
 
     // Calender
-    $('#calender').datetimepicker({
+    $("#calender").datetimepicker({
         inline: true,
-        format: 'L'
+        format: "L",
     });
-
 
     // Testimonials carousel
     $(".testimonial-carousel").owlCarousel({
@@ -271,9 +333,8 @@ function generateLinksHTML(links) {
         items: 1,
         dots: true,
         loop: true,
-        nav: false
+        nav: false,
     });
-
 
     // Worldwide Sales Chart
     var ctx1 = $("#worldwide-sales").get(0).getContext("2d");
@@ -284,25 +345,24 @@ function generateLinksHTML(links) {
             datasets: [{
                 label: "USA",
                 data: [15, 30, 55, 65, 60, 80, 95],
-                backgroundColor: "rgba(0, 156, 255, .7)"
+                backgroundColor: "rgba(0, 156, 255, .7)",
             },
             {
                 label: "UK",
                 data: [8, 35, 40, 60, 70, 55, 75],
-                backgroundColor: "rgba(0, 156, 255, .5)"
+                backgroundColor: "rgba(0, 156, 255, .5)",
             },
             {
                 label: "AU",
                 data: [12, 25, 45, 55, 65, 70, 60],
-                backgroundColor: "rgba(0, 156, 255, .3)"
-            }
-            ]
+                backgroundColor: "rgba(0, 156, 255, .3)",
+            },
+            ],
         },
         options: {
-            responsive: true
-        }
+            responsive: true,
+        },
     });
-
 
     // Salse & Revenue Chart
     var ctx2 = $("#salse-revenue").get(0).getContext("2d");
@@ -314,22 +374,20 @@ function generateLinksHTML(links) {
                 label: "Salse",
                 data: [15, 30, 55, 45, 70, 65, 85],
                 backgroundColor: "rgba(0, 156, 255, .5)",
-                fill: true
+                fill: true,
             },
             {
                 label: "Revenue",
                 data: [99, 135, 170, 130, 190, 180, 270],
                 backgroundColor: "rgba(0, 156, 255, .3)",
-                fill: true
-            }
-            ]
+                fill: true,
+            },
+            ],
         },
         options: {
-            responsive: true
-        }
+            responsive: true,
+        },
     });
-
-
 
     // Single Line Chart
     var ctx3 = $("#line-chart").get(0).getContext("2d");
@@ -341,14 +399,13 @@ function generateLinksHTML(links) {
                 label: "Salse",
                 fill: false,
                 backgroundColor: "rgba(0, 156, 255, .3)",
-                data: [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15]
-            }]
+                data: [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15],
+            },],
         },
         options: {
-            responsive: true
-        }
+            responsive: true,
+        },
     });
-
 
     // Single Bar Chart
     var ctx4 = $("#bar-chart").get(0).getContext("2d");
@@ -362,16 +419,15 @@ function generateLinksHTML(links) {
                     "rgba(0, 156, 255, .6)",
                     "rgba(0, 156, 255, .5)",
                     "rgba(0, 156, 255, .4)",
-                    "rgba(0, 156, 255, .3)"
+                    "rgba(0, 156, 255, .3)",
                 ],
-                data: [55, 49, 44, 24, 15]
-            }]
+                data: [55, 49, 44, 24, 15],
+            },],
         },
         options: {
-            responsive: true
-        }
+            responsive: true,
+        },
     });
-
 
     // Pie Chart
     var ctx5 = $("#pie-chart").get(0).getContext("2d");
@@ -385,16 +441,15 @@ function generateLinksHTML(links) {
                     "rgba(0, 156, 255, .6)",
                     "rgba(0, 156, 255, .5)",
                     "rgba(0, 156, 255, .4)",
-                    "rgba(0, 156, 255, .3)"
+                    "rgba(0, 156, 255, .3)",
                 ],
-                data: [55, 49, 44, 24, 15]
-            }]
+                data: [55, 49, 44, 24, 15],
+            },],
         },
         options: {
-            responsive: true
-        }
+            responsive: true,
+        },
     });
-
 
     // Doughnut Chart
     var ctx6 = $("#doughnut-chart").get(0).getContext("2d");
@@ -408,18 +463,13 @@ function generateLinksHTML(links) {
                     "rgba(0, 156, 255, .6)",
                     "rgba(0, 156, 255, .5)",
                     "rgba(0, 156, 255, .4)",
-                    "rgba(0, 156, 255, .3)"
+                    "rgba(0, 156, 255, .3)",
                 ],
-                data: [55, 49, 44, 24, 15]
-            }]
+                data: [55, 49, 44, 24, 15],
+            },],
         },
         options: {
-            responsive: true
-        }
+            responsive: true,
+        },
     });
-
-
-
-
 })(jQuery);
-
