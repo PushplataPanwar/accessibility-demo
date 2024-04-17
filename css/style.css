@@ -1,6 +1,6 @@
 /********** Template CSS **********/
 :root {
-  --primary: #237164;
+  --primary: #245289  ;
   --light: #f3f6f9;
   --dark: #191c24;
 }
@@ -83,7 +83,7 @@ a {
   left: 0;
   bottom: 0;
   width: 250px;
-  height: 100vh;
+  height: 100%;
   overflow-y: auto;
   background: var(--light);
   transition: 0.5s;
@@ -287,7 +287,7 @@ a {
 
 /* Text classes */
 .text-primary {
-  color: #237164 !important;
+  color: #245289 !important;
 }
 .text-purple {
   color: #1b065e;
@@ -300,4 +300,9 @@ a {
 }
 .text-orange {
   color: #d14624;
+}
+
+.fixed-nav{
+  position: fixed;
+  width: 250px;
 }

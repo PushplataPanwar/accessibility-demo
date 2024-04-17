@@ -37,19 +37,44 @@ function updateCSSVariables(primary, light, dark) {
 
 // Example data for sidebar links
 const sidebarLinks = [
-    { href: "index.html", text: "Basic Accessibility", iconClass: "fa fa-tachometer-alt" },
-    { href: "#", text: "Indroduction", iconClass: "fa fa-laptop", dropdown: [
-        { iconClass: "fa fa-laptop", href: "button.html", text: "Buttons" },
-        { iconClass: "fa fa-laptop", href: "button.html", text: "Buttons" },
-    ]},
-    { href: "index.html", text: "1 Accessibility", iconClass: "fa fa-tachometer-alt" },
-
+    { 
+        href: "index.html", 
+        text: "Basic Accessibility", 
+        iconClass: "fa fa-tachometer-alt", 
+        ariaLabel: "Navigate to Basic Accessibility" 
+    },
+    { 
+        href: "#", 
+        text: "Introduction", 
+        iconClass: "fa fa-laptop", 
+        dropdown: [
+            { 
+                iconClass: "fa fa-laptop", 
+                href: "button.html", 
+                text: "Buttons",
+                ariaLabel: "Navigate to Buttons" 
+            },
+            { 
+                iconClass: "fa fa-laptop", 
+                href: "button.html", 
+                text: "Buttons",
+                ariaLabel: "Navigate to Buttons" 
+            }
+        ]
+    },
+    { 
+        href: "index.html", 
+        text: "1 Accessibility", 
+        iconClass: "fa fa-tachometer-alt", 
+        ariaLabel: "Navigate to 1 Accessibility" 
+    }
 ];
+
 
 // Function to generate sidebar HTML
 function generateSidebarHTML(sidebarLinks) {
     return `
-        <nav class="navbar bg-light navbar-light">
+        <nav class="navbar bg-light navbar-light fixed-nav">
             <a href="index.html" class="navbar-brand mx-4 mb-3">
                 <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>Accessibility </h3>
             </a>
@@ -64,6 +89,38 @@ function generateSidebarHTML(sidebarLinks) {
         </nav>
     `;
 }
+
+function generateLinksHTML(links) {
+    return links.map(link => {
+        if (link.dropdown) {
+            return `
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="${link.iconClass} me-2"></i>${link.text}
+                    </a>
+                    <div class="dropdown-menu bg-transparent border-0" aria-labelledby="navbarDropdown">
+                        ${generateDropdownLinksHTML(link.dropdown)}
+                    </div>
+                </div>
+            `;
+        } else {
+            return `
+                <a href="${link.href}" class="nav-item nav-link" role="button" aria-label="${link.text}">
+                    <i class="${link.iconClass} me-2"></i>${link.text}
+                </a>
+            `;
+        }
+    }).join('');
+}
+
+function generateDropdownLinksHTML(links) {
+    return links.map(link => `
+        <a href="${link.href}" class="dropdown-item" role="menuitem" aria-label="${link.text}">
+            <i class="${link.iconClass} me-2"></i>${link.text}
+        </a>
+    `).join('');
+}
+
 
 // Function to generate sidebar links HTML
 function generateLinksHTML(links) {
