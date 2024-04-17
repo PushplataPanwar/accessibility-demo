@@ -1,6 +1,53 @@
 var root = document.documentElement;
 var previousLinkHref = null;
 var nextLinkHref = null;
+
+ //  SIDEBAR DATA
+ const sidebarLinks = [{
+    href: "index.html",
+    text: "Basic Accessibility",
+    iconClass: "fa fa-tachometer-alt",
+},
+{
+    href: "button.html",
+    text: "Indroduction",
+    iconClass: "fa fa-laptop",
+    dropdown: [{
+        iconClass: "fa fa-laptop",
+        href: "button.html",
+        text: "Buttons"
+    },
+    {
+        iconClass: "fa fa-laptop",
+        href: "chart.html",
+        text: "Chart"
+    },
+    ],
+},
+{
+    href: "404.html",
+    text: "Dropdown 2",
+    iconClass: "fa fa-laptop",
+    dropdown: [{
+        iconClass: "fa fa-laptop",
+        href: "404.html",
+        text: "404"
+    },
+    {
+        iconClass: "fa fa-laptop",
+        href: "widget.html",
+        text: "Widget"
+    },
+    ],
+},
+{
+    href: "table.html",
+    text: "Table",
+    iconClass: "fa fa-tachometer-alt",
+},
+];
+
+
 // Function to update CSS variables
 function updateCSSVariables(primary, light, dark) {
     root.style.setProperty("--primary", primary);
@@ -36,34 +83,7 @@ function updateCSSVariables(primary, light, dark) {
         return false;
     });
 
-    // Example data for sidebar links
-    const sidebarLinks = [{
-        href: "index.html",
-        text: "Basic Accessibility",
-        iconClass: "fa fa-tachometer-alt",
-    },
-    {
-        href: "#",
-        text: "Indroduction",
-        iconClass: "fa fa-laptop",
-        dropdown: [{
-            iconClass: "fa fa-laptop",
-            href: "button.html",
-            text: "Buttons"
-        },
-        {
-            iconClass: "fa fa-laptop",
-            href: "button.html",
-            text: "Buttons"
-        },
-        ],
-    },
-    {
-        href: "index.html",
-        text: "1 Accessibility",
-        iconClass: "fa fa-tachometer-alt",
-    },
-    ];
+   
 
     // Function to generate sidebar HTML
     function generateSidebarHTML(sidebarLinks, currentPath) {
@@ -86,6 +106,7 @@ function updateCSSVariables(primary, light, dark) {
 
 
     function generateLinksHTML(links, currentPath) {
+        console.log(currentPath, "dgsd")
         return links
             .map((link, index, array) => {
                 if (link.dropdown) {
@@ -152,21 +173,45 @@ function updateCSSVariables(primary, light, dark) {
     `;
     }
 
-    function handleDropdownKeydown(event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            const dropdownToggle = event.currentTarget;
-            if (dropdownToggle.getAttribute("aria-expanded") === "true") {
-                dropdownToggle.setAttribute("aria-expanded", "false");
-                dropdownToggle.nextElementSibling.classList.remove("show");
-            } else {
-                dropdownToggle.setAttribute("aria-expanded", "true");
-                dropdownToggle.nextElementSibling.classList.add("show");
-            }
-        }
-    }
 
+
+    //     function generateLinksHTML(links, currentPath) {
+    //         console.log(currentPath, "kjsdgsdjkgkfksdfhsk")
+    //         return links
+    //             .map((link, index, array) => {
+    //                 if (link.dropdown) {
+    //                     const isActiveDropdown = link.dropdown.some(
+    //                         (subLink) => subLink.href === currentPath
+    //                     );
+    //                     const dropdownItemsHTML = link.dropdown
+    //                         .map((subLink) => {
+    //                             const isActive = subLink.href === currentPath;
+    //                             return `<a href="${subLink.href}" class="dropdown-item">${subLink.text}</a>`;
+    //                         })
+    //                         .join("");
+
+    //                     return `
+
+
+    //  <div class="nav-item dropdown">
+    //  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="far fa-file-alt me-2"></i>Pages</a>
+    //  <div class="dropdown-menu bg-transparent border-0 " data-bs-popper="none">
+    //    ${dropdownItemsHTML}
+    //  </div>
+    // </div>
+    //             `;
+    //                 } else {
+    //                     const isActive = link.href === currentPath;
+    //                     return `<a href="${link.href}" tabindex="0" class="nav-item nav-link ${isActive ? "active" : ""}">
+    //                     <i class="${link.iconClass} me-2"></i>${link.text}
+    //                 </a>`;
+    //                 }
+    //             })
+    //             .join("");
+    //     }
     function generateLinksHTML(links, currentPath) {
+        console.log(currentPath, "dgsd");
+        
         return links
             .map((link, index, array) => {
                 if (link.dropdown) {
@@ -176,25 +221,47 @@ function updateCSSVariables(primary, light, dark) {
                     const dropdownItemsHTML = link.dropdown
                         .map((subLink) => {
                             const isActive = subLink.href === currentPath;
-                            return `<a href="${subLink.href}" class="dropdown-item">${subLink.text}</a>`;
+                            return `<a href="${subLink.href}" class="dropdown-item ${isActive ? "active" : ""
+                                }" tabindex="0">${subLink.text}</a>`;
                         })
                         .join("");
-
+    
+                    // Assign previous and next links based on the position of the dropdown link itself
+                    if (isActiveDropdown) {
+                        const dropdownIndex = link.dropdown.findIndex(subLink => subLink.href === currentPath);
+                        previousLinkHref = dropdownIndex > 0 ? link.dropdown[dropdownIndex - 1].href : null;
+                       
+                        nextLinkHref = dropdownIndex < link.dropdown.length - 1 ? link.dropdown[dropdownIndex + 1].href : null;
+                        if (previousLinkHref === null && index > 0) {
+                            previousLinkHref = array[index - 1].href;
+                        }
+                        if (nextLinkHref === null && index < array.length - 1) {
+                            nextLinkHref = array[index + 1].href;
+                        }
+    
+                        console.log(previousLinkHref, nextLinkHref, "test");
+                    }
+    
                     return `
-               
-                
- <div class="nav-item dropdown">
- <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true"><i class="far fa-file-alt me-2"></i>Pages</a>
- <div class="dropdown-menu bg-transparent border-0 " data-bs-popper="none">
-   ${dropdownItemsHTML}
- </div>
-</div>
-            `;
+                        <div class="nav-item dropdown ${isActiveDropdown ? 'show' : ''} ">
+                            <a href="#" class="nav-link dropdown-toggle  ${isActiveDropdown ? 'show' : ''}" data-bs-toggle="dropdown" aria-expanded="${isActiveDropdown}">
+                                <i class="far fa-file-alt me-2"></i>${link.text}
+                            </a>
+                            <div class="dropdown-menu bg-transparent border-0 ${isActiveDropdown ? 'show' : ''} " data-bs-popper="none">
+                                ${dropdownItemsHTML}
+                            </div>
+                        </div>
+                    `;
                 } else {
                     const isActive = link.href === currentPath;
-                    return `<a href="${link.href}" tabindex="0" class="nav-item nav-link ${isActive ? "active" : ""}">
-                    <i class="${link.iconClass} me-2"></i>${link.text}
-                </a>`;
+                    if (isActive && index > 0) {
+                        previousLinkHref = array[index - 1].href;
+                    }
+                    if (index < array.length - 1) {
+                        nextLinkHref = array[index + 1].href;
+                    }
+                    return `<a href="${link.href}" tabindex="0" class="nav-item nav-link ${isActive ? "active" : ""
+                        }"><i class="${link.iconClass} me-2"></i>${link.text}</a>`;
                 }
             })
             .join("");
@@ -204,12 +271,28 @@ function updateCSSVariables(primary, light, dark) {
 
     $(document).ready(function () {
         let currentPath = window.location.pathname;
-        currentPath = currentPath.replace(/^\/|\/index.html$/g, "");
+        currentPath = currentPath.replace(/^\/|\/$/g, "");
+        console.log(currentPath, "currentPath");
+
+        // Extract the filename
+        const lastIndex = currentPath.lastIndexOf('/');
+        const filename = currentPath.substring(lastIndex + 1);
         $(".sidebar_container").html(
-            generateSidebarHTML(sidebarLinks, currentPath)
+            generateSidebarHTML(sidebarLinks, filename)
         );
         $(".header_container").html(header);
-        console.log(nextLinkHref, previousLinkHref);
+        $(".navigation_pages").html(nav_pages);
+
+        $("#previousButton").click(function() {
+            window.location.href = previousLinkHref;
+        });
+        if(previousLinkHref == null){
+            $("#previousButton").attr('disabled', true)
+        }
+        $("#nextButton").click(function() {
+            window.location.href = nextLinkHref;
+        });
+        console.log(nextLinkHref, previousLinkHref, "NEXT X", "PREV");
     });
 
     // Example usage:
@@ -223,83 +306,33 @@ function updateCSSVariables(primary, light, dark) {
 <a href="#" class="sidebar-toggler flex-shrink-0"  tabindex="1">
     <i class="fa fa-bars"></i>
 </a>
+
 <form class="d-none d-md-flex ms-4">
     <input class="form-control border-0" type="search" placeholder="Search"  tabindex="1">
 </form>
-<div class="navbar-nav align-items-center ms-auto">
-    <div class="nav-item dropdown"  tabindex="1">
-        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-            <i class="fa fa-envelope me-lg-2"></i>
-            <span class="d-none d-lg-inline-flex">Message</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-            <a href="#" class="dropdown-item">
-                <div class="d-flex align-items-center">
-                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                    <div class="ms-2">
-                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                        <small>15 minutes ago</small>
-                    </div>
-                </div>
-            </a>
-            <hr class="dropdown-divider">
-            <a href="#" class="dropdown-item">
-                <div class="d-flex align-items-center">
-                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                    <div class="ms-2">
-                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                        <small>15 minutes ago</small>
-                    </div>
-                </div>
-            </a>
-            <hr class="dropdown-divider">
-            <a href="#" class="dropdown-item">
-                <div class="d-flex align-items-center">
-                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                    <div class="ms-2">
-                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                        <small>15 minutes ago</small>
-                    </div>
-                </div>
-            </a>
-            <hr class="dropdown-divider">
-            <a href="#" class="dropdown-item text-center">See all message</a>
-        </div>
-    </div>
-    <div class="nav-item dropdown "  tabindex="1">
-        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" > 
-            <i class="fa fa-bell me-lg-2"></i>
-            <span class="d-none d-lg-inline-flex">Notificatin</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-            <a href="#" class="dropdown-item">
-                <h6 class="fw-normal mb-0">Profile updated</h6>
-                <small>15 minutes ago</small>
-            </a>
-            <hr class="dropdown-divider">
-            <a href="#" class="dropdown-item">
-                <h6 class="fw-normal mb-0">New user added</h6>
-                <small>15 minutes ago</small>
-            </a>
-            <hr class="dropdown-divider">
-            <a href="#" class="dropdown-item">
-                <h6 class="fw-normal mb-0">Password changed</h6>
-                <small>15 minutes ago</small>
-            </a>
-            <hr class="dropdown-divider">
-            <a href="#" class="dropdown-item text-center">See all notifications</a>
-        </div>
-    </div>
-    <div class="nav-item dropdown">
-   
-        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-            <a href="#" class="dropdown-item">My Profile</a>
-            <a href="#" class="dropdown-item">Settings</a>
-            <a href="#" class="dropdown-item">Log Out</a>
-        </div>
-    </div>
-</div>
 </nav>`;
+
+
+    const nav_pages = `<div class="row " role="navigation" aria-label="Pagination">
+<div class="col-md-12 d-flex justify-content-between">
+    <button
+        type="button"
+        class="btn btn-lg btn-primary m-2"
+        id="previousButton"
+        aria-label="Previous Page"
+    >
+        Prev
+    </button>
+    <button
+        type="button"
+        class="btn btn-lg btn-primary m-2"
+        id="nextButton"
+        aria-label="Next Page"
+    >
+        Next
+    </button>
+</div>
+</div>`
 
     // Sidebar Toggler
     $(document).ready(function () {

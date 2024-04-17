@@ -1,6 +1,6 @@
 /********** Template CSS **********/
 :root {
-  --primary: #245289  ;
+  --primary: #245289;
   --light: #f3f6f9;
   --dark: #191c24;
 }
@@ -23,7 +23,7 @@ a {
 }
 .dropdown-item.active,
 .dropdown-item:active {
-  color: #fff;
+  color: #fff !important;
   text-decoration: none;
   background-color: var(--primary) !important;
 }
@@ -78,7 +78,18 @@ a {
 }
 
 /*** Layout ***/
+.content.open .sticky-top {
+  width: 100% !important;
+}
+.sticky-top {
+  display: flex;
+  justify-content: space-between;
+  position: fixed !important;
+  width: calc(100% - 250px) !important;
+  /* margin-bottom: 153px; */
+}
 .sidebar {
+  position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
@@ -91,7 +102,7 @@ a {
 }
 
 .content {
-  /* margin-left: 250px; */
+  margin-left: 250px;
   min-height: 100vh;
   background: #ffffff;
   transition: 0.5s;
@@ -300,4 +311,3 @@ a {
 .text-orange {
   color: #d14624;
 }
-
