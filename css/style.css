@@ -5,6 +5,27 @@
   --dark: #191c24;
 }
 
+/* Style for focused links in the sidebar */
+.nav-item a:focus {
+  outline: none  !important; /* Remove default outline */
+  background-color: #f0f0f0 !important; /* Change background color when focused */
+  color: #333 !important; /* Change text color when focused */
+}
+
+/* Style for focused dropdown items */
+.dropdown-item:focus {
+  outline: none !important; /* Remove default outline */
+  background-color: #f0f0f0 !important; /* Change background color when focused */
+  color: #333 !important; /* Change text color when focused */
+}
+
+/* Style for focused dropdown toggle */
+.dropdown-toggle:focus {
+  outline: none !important; /* Remove default outline */
+  background-color: #f0f0f0 !important; /* Change background color when focused */
+  color: #333 !important; /* Change text color when focused */
+}
+
 /* Theme Override */
 a {
   color: var(--primary) !important;
