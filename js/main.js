@@ -1,3 +1,12 @@
+var root = document.documentElement;
+// Function to update CSS variables
+function updateCSSVariables(primary, light, dark) {
+    root.style.setProperty('--primary', primary);
+    root.style.setProperty('--light', light);
+    root.style.setProperty('--dark', dark);
+}
+
+
 (function ($) {
     "use strict";
 
@@ -10,7 +19,7 @@
         }, 15); // 2000 milliseconds = 2 seconds
     };
     spinner();
-    
+
 
     // Back to top button
     $(window).scroll(function () {
@@ -26,47 +35,60 @@
     });
 
 
-    const sidebar_html = `
-    <nav class="navbar bg-light navbar-light">
-    <a href="index.html" class="navbar-brand mx-4 mb-3">
-        <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>Accessibility </h3>
-    </a>
-    <div class="d-flex align-items-center ms-4 mb-4">
-        
-        <div class="ms-3">
-            <h6 class="mb-0">Accessibility Guidelines</h6>
-         
-        </div>
-    </div>
-    <div class="navbar-nav w-100">
-        <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Basic Accessibility</a>
-        <div class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Indroduction</a>
-            <div class="dropdown-menu bg-transparent border-0">
-                <a href="button.html" class="dropdown-item">Buttons</a>
-                <a href="typography.html" class="dropdown-item">Typography</a>
-                <a href="element.html" class="dropdown-item">Other Elements</a>
+// Example data for sidebar links
+const sidebarLinks = [
+    { href: "index.html", text: "Basic Accessibility", iconClass: "fa fa-tachometer-alt" },
+    { href: "#", text: "Indroduction", iconClass: "fa fa-laptop", dropdown: [
+        { iconClass: "fa fa-laptop", href: "button.html", text: "Buttons" },
+        { iconClass: "fa fa-laptop", href: "button.html", text: "Buttons" },
+    ]},
+    { href: "index.html", text: "1 Accessibility", iconClass: "fa fa-tachometer-alt" },
+
+];
+
+// Function to generate sidebar HTML
+function generateSidebarHTML(sidebarLinks) {
+    return `
+        <nav class="navbar bg-light navbar-light">
+            <a href="index.html" class="navbar-brand mx-4 mb-3">
+                <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>Accessibility </h3>
+            </a>
+            <div class="d-flex align-items-center ms-4 mb-4">
+                <div class="ms-3">
+                    <h6 class="mb-0">Accessibility Guidelines</h6>
+                </div>
             </div>
-        </div>
-        <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
-        <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
-        <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
-        <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
-        <div class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
-            <div class="dropdown-menu bg-transparent border-0">
-                <a href="signin.html" class="dropdown-item">Sign In</a>
-                <a href="signup.html" class="dropdown-item">Sign Up</a>
-                <a href="404.html" class="dropdown-item">404 Error</a>
-                <a href="blank.html" class="dropdown-item">Blank Page</a>
-                <a href="form.html" class="dropdown-item">Forms</a>
+            <div class="navbar-nav w-100">
+                ${generateLinksHTML(sidebarLinks)}
             </div>
-        </div>
-    </div>
-</nav>`;
+        </nav>
+    `;
+}
+
+// Function to generate sidebar links HTML
+function generateLinksHTML(links) {
+    return links.map(link => {
+        if (link.dropdown) {
+            return `
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="${link.iconClass} me-2"></i>${link.text}</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        ${generateLinksHTML(link.dropdown)}
+                    </div>
+                </div>
+            `;
+        } else {
+            return `<a href="${link.href}" class="nav-item nav-link"><i class="${link.iconClass} me-2"></i>${link.text}</a>`;
+        }
+    }).join('');
+}
+
+// Example usage:
+// const sidebarContainer = document.getElementById('sidebar-container');
+// sidebarContainer.innerHTML = generateSidebarHTML(sidebarLinks);
 
 
-const header = `<nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+    const header = `<nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
 <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
     <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
 </a>
@@ -155,20 +177,20 @@ const header = `<nav class="navbar navbar-expand bg-light navbar-light sticky-to
 
 
     $(document).ready(function () {
-        $('.sidebar_container').html(sidebar_html);
+        $('.sidebar_container').html(generateSidebarHTML(sidebarLinks));
         $('.header_container').html(header);
         header
     });
 
 
     // Sidebar Toggler
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.sidebar-toggler').click(function () {
             $('.sidebar, .content').toggleClass("open");
             return false;
         });
     });
-    
+
 
     // Progress Bar
     $('.pg-bar').waypoint(function () {
@@ -338,6 +360,8 @@ const header = `<nav class="navbar navbar-expand bg-light navbar-light sticky-to
             responsive: true
         }
     });
+
+
 
 
 })(jQuery);
