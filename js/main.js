@@ -32,19 +32,16 @@
         <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>Accessibility </h3>
     </a>
     <div class="d-flex align-items-center ms-4 mb-4">
-        <div class="position-relative">
-            <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-            <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-        </div>
+        
         <div class="ms-3">
-            <h6 class="mb-0">Jhon Doe</h6>
-            <span>Admin</span>
+            <h6 class="mb-0">Accessibility Guidelines</h6>
+         
         </div>
     </div>
     <div class="navbar-nav w-100">
-        <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+        <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Basic Accessibility</a>
         <div class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>
+            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Indroduction</a>
             <div class="dropdown-menu bg-transparent border-0">
                 <a href="button.html" class="dropdown-item">Buttons</a>
                 <a href="typography.html" class="dropdown-item">Typography</a>
@@ -144,10 +141,7 @@ const header = `<nav class="navbar navbar-expand bg-light navbar-light sticky-to
         </div>
     </div>
     <div class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-            <span class="d-none d-lg-inline-flex">John Doe</span>
-        </a>
+   
         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
             <a href="#" class="dropdown-item">My Profile</a>
             <a href="#" class="dropdown-item">Settings</a>
@@ -168,11 +162,13 @@ const header = `<nav class="navbar navbar-expand bg-light navbar-light sticky-to
 
 
     // Sidebar Toggler
-    $('.sidebar-toggler').click(function () {
-        $('.sidebar, .content').toggleClass("open");
-        return false;
+    $(document).ready(function() {
+        $('.sidebar-toggler').click(function () {
+            $('.sidebar, .content').toggleClass("open");
+            return false;
+        });
     });
-
+    
 
     // Progress Bar
     $('.pg-bar').waypoint(function () {

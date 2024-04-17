@@ -67,7 +67,7 @@
 
 /*** Layout ***/
 .sidebar {
-    position: fixed;
+  
     top: 0;
     left: 0;
     bottom: 0;
@@ -80,7 +80,7 @@
 }
 
 .content {
-    margin-left: 250px;
+    /* margin-left: 250px; */
     min-height: 100vh;
     background: #FFFFFF;
     transition: 0.5s;
