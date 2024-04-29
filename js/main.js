@@ -45,6 +45,11 @@ var nextLinkHref = null;
     text: "Table",
     iconClass: "fa fa-tachometer-alt",
 },
+{
+    href: "signin.html",
+    text: "signin",
+    iconClass: "fa fa-tachometer-alt",
+},
 ];
 
 
@@ -159,12 +164,10 @@ function updateCSSVariables(primary, light, dark) {
         return `
         <nav class="navbar bg-light navbar-light">
             <a href="index.html" class="navbar-brand mx-4 mb-3" tabindex="0" aria-label="Home">
-                <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>Accessibility </h3>
+              <img src="img/logo.jpg" class="img-fluid"> 
             </a>
             <div class="d-flex align-items-center ms-4 mb-4" tabindex="0">
-                <div class="ms-3">
-                    <h6 class="mb-0" tabindex="0">Accessibility Guidelines</h6>
-                </div>
+            
             </div>
             <div class="navbar-nav w-100">
                 ${generateLinksHTML(sidebarLinks, currentPath)}
@@ -299,7 +302,7 @@ function updateCSSVariables(primary, light, dark) {
     // const sidebarContainer = document.getElementById('sidebar-container');
     // sidebarContainer.innerHTML = generateSidebarHTML(sidebarLinks);
 
-    const header = `<nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+    const header = `<nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-2">
 <a href="index.html" class="navbar-brand d-flex d-lg-none me-4"  tabindex="1">
     <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
 </a>
