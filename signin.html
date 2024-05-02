@@ -32,45 +32,75 @@
 </head>
 
 <body>
-    <div class=" position-relative bg-white d-flex p-0">
-        <!-- Spinner Start -->
+    <div class="bg-white d-flex p-0">
+      <!-- Spinner Start -->
+      <!--  -->
+      <!-- Spinner End -->
+
+      <!-- Sidebar Start -->
+      <aside>
+        <div class="sidebar pe-4 pb-3 sidebar_container" onkeypress="">
         
-        <!-- Spinner End -->
-
-
-        <!-- Sign In Start -->
-        <div class="container-fluid">
-            <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
-                <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
-                    <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <a href="index.html" class="">
-                                <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
-                            </a>
-                            <h3>Sign In</h3>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                            <label for="floatingInput">Email address</label>
-                        </div>
-                        <div class="form-floating mb-4">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                            <label for="floatingPassword">Password</label>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                            </div>
-                            <a href="">Forgot Password</a>
-                        </div>
-                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign In</button>
-                        <p class="text-center mb-0">Don't have an Account? <a href="">Sign Up</a></p>
-                    </div>
-                </div>
-            </div>
         </div>
-        <!-- Sign In End -->
+      </aside>
+      <!-- Sidebar End -->
+
+      <!-- Content Start -->
+      <div class="content">
+        <!-- Navbar Start -->
+        <div class="header_container header_container mb-5 pb-4"></div>
+        <!-- Navbar End -->
+
+        <!-- Sale & Revenue Start -->
+        <div class="container-fluid pt-4 px-4">
+          <div class="navigation_pages"> </div> 
+         
+        
+          <div class="row mt-4">
+            <div class="col-md-12" role="main">
+              <h1>A Brief History</h1>
+              <p>
+                  The Web Content Accessibility Guidelines (WCAG) are part of a series of web accessibility guidelines published by the Web Accessibility Initiative (WAI) of the World Wide Web Consortium (W3C), the main international standards organization for the Internet. They are a set of recommendations for making Web content more accessible, primarily for people with disabilities—but also for all user agents, including highly limited devices, such as mobile phones. WCAG 2.0 was published in December 2008 and became an ISO standard, ISO/IEC 40500:2012 in October 2012. WCAG 2.2 became a W3C Recommendation on 5 October 2023.
+              </p>
+              <div class="row d-flex justify-content-center" >
+                <img src="./img/history.png" alt="" srcset="" class="history-img img-fluid">
+              </div>
+              <h2>Earlier guidelines (1995–1998)</h2>
+              <p>
+                  The first web accessibility guideline was compiled by Gregg Vanderheiden and released in January 1995, just after the 1994 Second International Conference on the World-Wide Web (WWW II) in Chicago (where Tim Berners-Lee first mentioned disability access in a keynote speech after seeing a pre-conference workshop on accessibility led by Mike Paciello). Over 38 different Web access guidelines followed from various authors and organizations over the next few years. These were brought together in the Unified Web Site Accessibility Guidelines compiled at the University of Wisconsin–Madison. Version 8 of the Unified Web Site Accessibility Guidelines, published in 1998, served as the starting point for the W3C's WCAG 1.0.
+              </p>
+              
+              <h2>Version 1 (1999–2000)</h2>
+              <p>
+                  The WCAG 1.0 were published and became a W3C recommendation on 5 May 1999. In February 2008, The WCAG Samurai, a group of developers independent of the W3C, and led by Joe Clark, published corrections for, and extensions to, the WCAG 1.0.
+              </p>
+              <h2>Version 2 (2001–present)</h2>
+              <p>
+                  The first concept proposal of WCAG 2.0 was published on 25 January 2001. In the following years new versions were published intended to solicit feedback from accessibility experts and members of the disability community. On 27 April 2006 a "Last Call Working Draft" was published. Due to the many amendments that were necessary, WCAG 2.0 was published again as a concept proposal on 17 May 2007, followed by a second "Last Call Working Draft" on 11 December 2007. In April 2008 the guidelines became a "Candidate Recommendation". On 3 November 2008 the guidelines became a "Proposed Recommendation". WCAG 2.0 was published as a W3C Recommendation on 11 December 2008. In October 2012, WCAG 2.0 were accepted by the International Organization for Standardization as an ISO International Standard, ISO/IEC 40500:2012. In early 2014, WCAG 2.0's Level A and Level AA success criteria were incorporated as references in clause 9.2 ("Web content requirements") of the European standard EN 301 549 published by ETSI. EN 301 549 was produced in response to a mandate that the European Commission gave to the three official European standardisation bodies (CEN, CENELEC and ETSI) and is the first European standard for ICT products and services. WCAG 2.2 became a
+              </p>
+          
+              <h2>Version 3 (under development)</h2>
+          
+              <p>
+                  In early 2021, the Accessibility Guidelines Working Group presented the first public working draft (FPWD) of the future WCAG 3.0, intended to provide a range of recommendations for making web content more accessible. The 2021 FPWD introduced a new color contrast method as part of WCAG 3.0, as a candidate to replace the existing WCAG 2.x contrast specification, called the Accessible Perceptual Contrast Algorithm (APCA), which is currently being beta tested. It should be made clear that no part of WCAG 3.0 is an official recommendation. WCAG 3.0 is a draft undergoing significant development efforts, and the expected release date as an official recommendation is not defined.
+              </p>
+          </div>
+          
+          </div>
+        </div>
+      </div>
+      <!-- <div class="change_button">
+        <button onclick=" updateCSSVariables('#ff0000', '#ffffff', '#000000')">Chnage Theme color 1</button>
+        <button onclick=" updateCSSVariables('#ff0000', '#ffffff', '#000000')">Chnage Theme color 2</button>
+        <button onclick=" updateCSSVariables('#ff0000', '#ffffff', '#000000')">Chnage Theme color 3</button>
+        <button onclick=" updateCSSVariables('#ff0000', '#ffffff', '#000000')">Chnage Theme color 4</button>
+      </div> -->
+      <!-- Content End -->
+
+      <!-- Back to Top -->
+      <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"
+        ><i class="bi bi-arrow-up"></i
+      ></a>
     </div>
 
     <!-- JavaScript Libraries -->
@@ -86,6 +116,6 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-</body>
+  </body>
 
 </html>

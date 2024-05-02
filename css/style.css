@@ -292,12 +292,26 @@ a {
   color: #d14624;
 }
 
-.history-img{
-  width: 922px;
-  height: auto;
-  margin: 28px 0px;
-}
 
+.banner h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: #333940;
+}
+.banner p{
+
+    font-size: 16px;
+    color: #212121;
+    line-height: 28px;
+
+}
+.banner h1 {
+  margin: 0px 0px 18px;
+  color: #001b47;
+  font-weight: 700;
+  font-size: 2.25rem;
+}
 /* ---------------------------------------------------------Responsive---------------------------------------------- */
 
 
