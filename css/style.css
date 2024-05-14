@@ -1,14 +1,4 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-
-
-
-
-
-
-
-
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 /********** Template CSS **********/
 :root {
@@ -16,7 +6,7 @@
   --light: #f3f6f9;
   --dark: #191c24;
 }
-body{
+body {
   font-family: "Inter", sans-serif;
 }
 /* Theme Override */
@@ -122,21 +112,21 @@ a {
   transition: 0.5s;
 }
 
-
 /*** Navbar ***/
 .sidebar .navbar .navbar-nav .nav-link {
-    padding: 7px 12px;
-    color: var(--dark);
-    font-weight: 700;
-    border-left: 3px solid var(--light);
-    border-radius: 0 30px 30px 0;
-    font-size: 1rem;
-    margin: 7px 0px;
-    background: #f3f6f9;
-    display: flex;
-    align-items: center;
+  padding: 7px 12px;
+  color: var(--dark);
+  font-weight: 700;
+  border-left: 3px solid var(--light);
+  border-radius: 0 30px 30px 0;
+  font-size: 1rem;
+  margin: 7px 0px;
+  background: #f3f6f9;
+  display: flex;
+  align-items: center;
 }
-.sidebar .navbar .navbar-nav .nav-link:hover, .sidebar .navbar .navbar-nav .nav-link.active {
+.sidebar .navbar .navbar-nav .nav-link:hover,
+.sidebar .navbar .navbar-nav .nav-link.active {
   color: var(--primary);
   background: #ffffff;
   border-color: var(--primary);
@@ -215,7 +205,6 @@ a {
   transform: rotate(-180deg);
 }
 
-
 /*** Date Picker ***/
 .bootstrap-datetimepicker-widget.bottom {
   top: auto !important;
@@ -292,19 +281,18 @@ a {
   color: #d14624;
 }
 
-
 .banner h2 {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 14px;
   color: #333940;
+  line-height: 1.5;
 }
-.banner p{
-
-    font-size: 16px;
-    color: #212121;
-    line-height: 28px;
-
+ p {
+  font-size: 14px;
+  color: #212121;
+  line-height: 25px;
+  font-weight: 400;
 }
 .banner h1 {
   margin: 0px 0px 18px;
@@ -312,10 +300,24 @@ a {
   font-weight: 700;
   font-size: 2.25rem;
 }
+.home-page ul{
+  display: flex;
+  list-style-type: none;
+}
+.home-page ul li b{
+font-weight: bolder;
+text-decoration: underline;
+/* padding: 29px; */
+color: #2b4773;}
+.home-page ul li{
+  margin: 7px;
+  font-size: 14px;
+  color: black;
+  background: #fad6b7;
+  padding: 34px 10px;
+
+}
 /* ---------------------------------------------------------Responsive---------------------------------------------- */
-
-
-
 
 @media (min-width: 992px) {
   .sidebar {
@@ -350,7 +352,7 @@ a {
     margin-left: 0;
   }
 }
-@media (max-width:767px) {
+@media (max-width: 767px) {
   .sticky-top {
     display: flex;
     justify-content: space-between;
