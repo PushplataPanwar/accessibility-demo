@@ -5,49 +5,13 @@ var nextLinkHref = null;
  //  SIDEBAR DATA
  const sidebarLinks = [{
     href: "index.html",
-    text: "Basic Accessibility",
+    text: "Level of Accessibility",
     iconClass: "fa fa-tachometer-alt",
 },
+
 {
-    href: "button.html",
-    text: "Indroduction",
-    iconClass: "fa fa-laptop",
-    dropdown: [{
-        iconClass: "fa fa-laptop",
-        href: "button.html",
-        text: "Buttons"
-    },
-    {
-        iconClass: "fa fa-laptop",
-        href: "chart.html",
-        text: "Chart"
-    },
-    ],
-},
-{
-    href: "404.html",
-    text: "Dropdown 2",
-    iconClass: "fa fa-laptop",
-    dropdown: [{
-        iconClass: "fa fa-laptop",
-        href: "404.html",
-        text: "404"
-    },
-    {
-        iconClass: "fa fa-laptop",
-        href: "widget.html",
-        text: "Widget"
-    },
-    ],
-},
-{
-    href: "table.html",
-    text: "Table",
-    iconClass: "fa fa-tachometer-alt",
-},
-{
-    href: "signin.html",
-    text: "signin",
+    href: "contrast-checker.html",
+    text: "contrast-checker",
     iconClass: "fa fa-tachometer-alt",
 },
 ];
